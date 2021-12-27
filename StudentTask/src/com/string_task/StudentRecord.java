@@ -1,8 +1,9 @@
 package com.string_task;
 
 import java.util.ArrayList;
+import java.util.Collections;
 //import java.util.Collections;
-import java.util.Comparator;
+//import java.util.Comparator;
 import java.util.List;
 //import java.util.stream.Collectors;
 //import java.util.stream.Stream;
@@ -89,7 +90,7 @@ public class StudentRecord {
 //		mergedStudentRecordCSandIT.sort(Comparator.comparing(Students::getSequenceNumber).reversed());
 		
 		mergedStudentRecordCSandIT.sort((Students o1, Students o2)->o1.getSequenceNumber().compareTo(o2.getSequenceNumber()));
-		
+		Collections.reverse(mergedStudentRecordCSandIT);
 		
 
 		for (Students student : mergedStudentRecordCSandIT) {
