@@ -11,7 +11,7 @@ public class OddEvenGenerator {
 			semaphoreOdd.acquire();
 			System.out.println(Thread.currentThread().getName() + " " + number);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} finally {
 			semaphoreEven.release();
@@ -24,7 +24,7 @@ public class OddEvenGenerator {
 			semaphoreEven.acquire();
 			System.out.println(Thread.currentThread().getName() + " " + number);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} finally {
 			semaphoreOdd.release();
