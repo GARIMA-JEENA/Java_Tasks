@@ -1,0 +1,28 @@
+mongo //OPENING MONGO IN CMD
+
+
+show dbs //FOR DATABASES
+
+use task //switching to "task" DATABASE
+
+show collections //to see collections in the "task DATABASE
+
+db.createCollection("studentRecord")//creating collection in DATABASE
+
+db.studentRecord.insertOne(name:"Rahul",stream:"CSE",location:"Nainital",roll:12)
+db.studentRecord.insertOne({name:"Sita",stream:"ECE",location:"Agra",roll:09}) //INSERTING INTO COLLECTION
+
+db.studentRecord.insertMany([{name:"Ridhi",stream:"CSE",location:"Ranikhet",roll:02},
+ {name:"Amit",stream:"IT",location:"Delhi",roll:03}]) //INSERTING MANY DOCUMENTS IN COLLECTION SIMULATANEOUSLY
+ 
+ 
+db.studentRecord.find()//TO RETRIEVE DATA FROM COLLECTION
+db.studentRecord.find().pretty()//
+
+db.studentRecord.find().sort({name:1})//SORT DATA BY name KEY
+
+db.studentRecord.find().sort({name:1}).pretty()//FOR BETTER DISPLAY
+ 
+ 
+
+
