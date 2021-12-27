@@ -86,7 +86,11 @@ public class StudentRecord {
 
 //		Collections.sort(mergedStudentRecordCSandIT, new StudentsSortingComparator());
 		
-		mergedStudentRecordCSandIT.sort(Comparator.comparing(Students::getSequenceNumber).reversed());
+//		mergedStudentRecordCSandIT.sort(Comparator.comparing(Students::getSequenceNumber).reversed());
+		
+		mergedStudentRecordCSandIT.sort((Students o1, Students o2)->o1.getSequenceNumber().compareTo(o2.getSequenceNumber()));
+		
+		
 
 		for (Students student : mergedStudentRecordCSandIT) {
 			System.out.print(student.registrationNumber);
