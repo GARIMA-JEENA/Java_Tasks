@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
-//import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +23,7 @@ public class UserController {
 
 	@Autowired
 	KafkaTemplate<String,UserModel> kafkaTemplate;
+
 	
 	@Autowired
 	private DaoUser daoUser;
@@ -44,18 +47,22 @@ public class UserController {
 		return daoUser.findById(rollNumber);
 		
 	}
-////	
-//	@PutMapping("/updateUser/{rollNumber}")
-//	public List<UserModel> updateUser(@PathVariable String rollNumber) {
-//		return daoUser.save();
-//	}
 	
-//	@DeleteMapping("/deleteUser/{rollNumber}")
-//	public	String deleteUser(@PathVariable String rollNumber) {
-//		//kafkaTemplate.send(TOPIC,rollNumber);
-//		return "User Deleted suucessfully";
-//	}
+	@PutMapping("/updateUser/{rollNumber}")
+	public String updateUser(@RequestBody UserModel userModel) {
+		kafkaTemplate.send(TOPIC, userModel);
+		return "User updated successfully";			
+	}
 	
-	
+	@DeleteMapping("/deleteUser/{rollNumber}")
+	public ResponseEntity<HttpStatus> deleteUser(@PathVariable String rollNumber) {
+		try {
+			daoUser.deleteById(rollNumber);
+			return new ResponseEntity<>(HttpStatus.ACCEPTED);
+		}catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+				
+	}
 	
 }

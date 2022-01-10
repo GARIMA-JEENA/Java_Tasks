@@ -20,6 +20,11 @@ public class KafkaConsumer {
 		System.out.println("CONSUMED MESSAGE : "+ userModel);
 		daoUser.save(userModel);
 	}
+//	@KafkaListener(topics="UserTask3",groupId="j",containerFactory="userKafkaListenerFactory")
+//	public void consumeRollNumber(String rollNumber) {
+//		System.out.println("CONSUMED MESSAGE : "+ rollNumber);
+//		daoUser.deleteById(rollNumber);;
+//	}
 	
 
 }

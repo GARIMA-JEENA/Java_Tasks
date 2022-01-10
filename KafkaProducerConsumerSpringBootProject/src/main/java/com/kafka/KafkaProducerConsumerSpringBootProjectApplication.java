@@ -25,3 +25,5 @@ public class KafkaProducerConsumerSpringBootProjectApplication {
 //history | grep create
 
 //db name: Task3
+
+//{"rollNumber":"119","userName":"Rahul","location":"Delhi"}
