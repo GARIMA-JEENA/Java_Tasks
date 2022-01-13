@@ -13,30 +13,31 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
-import com.kafka.document.UserModel;
+import com.kafka.document.InputFormat;
 
 @EnableKafka
 @Configuration
 public class KafkaConsumerConfiguration {
-	
-	@Bean
-    public ConsumerFactory<String, UserModel> userConsumerFactory() {
-        Map<String, Object> config = new HashMap<>();
 
-        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
-        config.put(ConsumerConfig.GROUP_ID_CONFIG, "j");
-        config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-        return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(),
-                new JsonDeserializer<>(UserModel.class));
-    }
-	 @Bean
-	    public ConcurrentKafkaListenerContainerFactory<String, UserModel> userKafkaListenerFactory() {
-	        ConcurrentKafkaListenerContainerFactory<String, UserModel> factory = new ConcurrentKafkaListenerContainerFactory<>();
-	        factory.setConsumerFactory(userConsumerFactory());
-	        return factory;
-	    }
-//	 
+	@Bean
+	public ConsumerFactory<String, InputFormat> userConsumerFactory() {
+		Map<String, Object> config = new HashMap<>();
+
+		config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
+		config.put(ConsumerConfig.GROUP_ID_CONFIG, "j");
+		config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+		config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+		return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(),
+				new JsonDeserializer<>(InputFormat.class));
+	}
+
+	@Bean
+	public ConcurrentKafkaListenerContainerFactory<String, InputFormat> userKafkaListenerFactory() {
+		ConcurrentKafkaListenerContainerFactory<String, InputFormat> factory = new ConcurrentKafkaListenerContainerFactory<>();
+		factory.setConsumerFactory(userConsumerFactory());
+		return factory;
+	}
+
 //	 @Bean
 //	    public ConsumerFactory<String, String> consumerFactory() {
 //	        Map<String, Object> config = new HashMap<String, Object>();

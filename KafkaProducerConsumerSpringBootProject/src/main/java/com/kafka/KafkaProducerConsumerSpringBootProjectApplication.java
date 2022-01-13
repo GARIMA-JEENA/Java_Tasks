@@ -24,6 +24,20 @@ public class KafkaProducerConsumerSpringBootProjectApplication {
 
 //history | grep create
 
+//./bin/kafka-topics.sh --bootstrap-server=localhost:9092 --list
+
+//./bin/kafka-topics.sh --bootstrap-server=localhost:9092 --describe --topic UserTask3
+
 //db name: Task3
 
-//{"rollNumber":"119","userName":"Rahul","location":"Delhi"}
+//{
+//    "method":"Create",
+//    "userModel":
+//    {
+//    "rollNumber":"200",
+//    "firstName":"Sneha",
+//	"lastName":"Roy",
+//    "stream":"CSE",
+//    "location":"Assam"
+//    }
+//}

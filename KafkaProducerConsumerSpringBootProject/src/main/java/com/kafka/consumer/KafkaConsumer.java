@@ -3,28 +3,31 @@ package com.kafka.consumer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import com.kafka.dao.DaoUser;
-import com.kafka.document.UserModel;
+import com.kafka.document.InputFormat;
+import com.kafka.service.UserService;
 
 @Component
-@Service
 public class KafkaConsumer {
-	
-	@Autowired
-	private DaoUser daoUser;
-	
-	@KafkaListener(topics="UserTask3",groupId="j",containerFactory="userKafkaListenerFactory")
-	public void consumeJson(UserModel userModel) {
-		System.out.println("CONSUMED MESSAGE : "+ userModel);
-		daoUser.save(userModel);
-	}
-//	@KafkaListener(topics="UserTask3",groupId="j",containerFactory="userKafkaListenerFactory")
-//	public void consumeRollNumber(String rollNumber) {
-//		System.out.println("CONSUMED MESSAGE : "+ rollNumber);
-//		daoUser.deleteById(rollNumber);;
-//	}
-	
 
+	@Autowired
+	protected UserService userService;
+
+	@KafkaListener(topics = "UserTask3", groupId = "j", containerFactory = "userKafkaListenerFactory")
+	public void consume(InputFormat inputFormat) {
+		if (inputFormat.getMethod().equals("Create")) {
+			userService.createUser(inputFormat);
+		}
+		if (inputFormat.getMethod().equals("Update")) {
+			userService.updateUser(inputFormat);
+		}
+		if (inputFormat.getMethod().equals("Delete")) {
+			userService.deleteUser(inputFormat.userModel.getRollNumber());
+		}
+	}
+//	@KafkaListener(topics="UserTask3",groupId="j",containerFactory="kafkaListenerContainerFactory")
+//	public void consumeString(String rollNumber) {
+//		userService.deleteUser(rollNumber);
+//		
+//	}
 }

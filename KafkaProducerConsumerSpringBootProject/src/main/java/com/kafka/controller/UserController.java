@@ -1,8 +1,8 @@
 package com.kafka.controller;
 
 import java.util.List;
-import java.util.Optional;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,54 +15,108 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kafka.dao.DaoUser;
-import com.kafka.document.UserModel;
+import com.kafka.config.dto.UserDTO;
+import com.kafka.document.InputFormat;
+import com.kafka.service.UserService;
+import com.kafka.validation.EmptyInputException;
+import com.kafka.validation.IdNotFound;
+import com.kafka.validation.IdNotFoundException;
+import com.kafka.validation.InputValidation;
 
 @RestController
 public class UserController {
 
-	@Autowired
-	KafkaTemplate<String,UserModel> kafkaTemplate;
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-	
 	@Autowired
-	private DaoUser daoUser;
-	
-	private static final String TOPIC="UserTask3";
-	
+	KafkaTemplate<String, InputFormat> kafkaTemplate;
+
+	@Autowired
+	protected UserService userService;
+
+	@Autowired
+	private InputValidation inputValidation;
+
+	@Autowired
+	private IdNotFound idNotFound;
+
+	private static final String TOPIC = "UserTask3";
+
 	@PostMapping("/createUser")
-	public String createUser(@RequestBody UserModel userModel){
-		
-		kafkaTemplate.send(TOPIC, userModel);
-		return "User added successfully";	
+	public ResponseEntity<String> createUser(@RequestBody InputFormat inputFormat) {
+		if (inputValidation.validationFunc(inputFormat) == false) {
+			throw new EmptyInputException("601", "Input Fields are Empty");
 		}
-	
-	@GetMapping("/getAllUsers")
-	public List<UserModel> getAllUsers() {
-		return daoUser.findAll();
-	}
-	
-	@GetMapping("/getUser/{rollNumber}")
-	public Optional<UserModel> getUser(@PathVariable String rollNumber) {
-		return daoUser.findById(rollNumber);
-		
-	}
-	
-	@PutMapping("/updateUser/{rollNumber}")
-	public String updateUser(@RequestBody UserModel userModel) {
-		kafkaTemplate.send(TOPIC, userModel);
-		return "User updated successfully";			
-	}
-	
-	@DeleteMapping("/deleteUser/{rollNumber}")
-	public ResponseEntity<HttpStatus> deleteUser(@PathVariable String rollNumber) {
 		try {
-			daoUser.deleteById(rollNumber);
-			return new ResponseEntity<>(HttpStatus.ACCEPTED);
-		}catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			kafkaTemplate.send(TOPIC, inputFormat);
+			logger.info("Adding new User");
+		} catch (Exception exception) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
-				
+		return new ResponseEntity<>("Request Successfull", HttpStatus.ACCEPTED);
 	}
-	
+
+	@GetMapping(value = "/getUser")
+	public List<UserDTO> getAllUsers() {
+		logger.info("Getting All user Details ");
+		return userService.getAllUsers();
+	}
+
+	@GetMapping("/getUser/{rollNumber}")
+	public UserDTO getUser(@PathVariable String rollNumber) {
+		if (idNotFound.checkIDFound(rollNumber) == false) {
+			throw new IdNotFoundException("601", "Id not Found");
+		}
+		logger.info("Getting user Details ");
+		return userService.getUser(rollNumber);
+	}
+
+	@PutMapping("/updateUser/{rollNumber}")
+	public ResponseEntity<String> udpateUser(@RequestBody InputFormat inputFormat) {
+		if (inputValidation.validationFunc(inputFormat) == false) {
+			throw new EmptyInputException("601", "Input Fields are Empty");
+		}
+		try {
+			kafkaTemplate.send(TOPIC, inputFormat);
+			logger.info("Updating User Details");
+		} catch (Exception exception) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>("Request Successfull", HttpStatus.ACCEPTED);
+	}
+
+	@DeleteMapping("/deleteUser/{rollNumber}")
+	public ResponseEntity<String> deleteUser(@PathVariable String rollNumber) {
+		if (idNotFound.checkIDFound(rollNumber) == false) {
+			throw new IdNotFoundException("601", "Id not Found");
+		}
+		try {
+			logger.info("Deleting User");
+			userService.deleteUser(rollNumber);
+			return new ResponseEntity<>("Request Successfull", HttpStatus.ACCEPTED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+//	@DeleteMapping("/deleteUser/{rollNumber}")
+//	public ResponseEntity<String> deleteUser(@PathVariable String rollNumber) {
+//		try {
+//			InputFormat inputFormat = new InputFormat();
+//			inputFormat.userModel.setRollNumber(rollNumber);
+//			inputFormat.setMethod("Delete");
+//			kafkaTemplate.send(TOPIC, inputFormat);
+//			logger.info("Deleting User");
+//			return new ResponseEntity<>("User Deleted Successfully", HttpStatus.ACCEPTED);
+//		} catch (Exception e) {
+//			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+//	}
+
+//	@GetMapping("/getUser/{lowerRange}/{upperRange}")
+//	public Optional<UserModel> getUser(@PathVariable String lowerRange, @PathVariable String upperRange) {
+//		logger.info("Getting users in between given Range");
+//		return userService.getUsersInRange(lowerRange,upperRange);
+//	}
+
 }
