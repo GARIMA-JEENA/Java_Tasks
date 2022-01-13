@@ -22,7 +22,8 @@ public class KafkaConsumer {
 			userService.updateUser(inputFormat);
 		}
 		if (inputFormat.getMethod().equals("Delete")) {
-			userService.deleteUser(inputFormat.userDTO.getRollNumber());
+//			userService.deleteUser(inputFormat.userDTO.getRollNumber());
+			userService.deleteUser(inputFormat);
 		}
 	}
 //	@KafkaListener(topics="UserTask3",groupId="j",containerFactory="kafkaListenerContainerFactory")

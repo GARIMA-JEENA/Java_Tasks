@@ -85,38 +85,37 @@ public class UserController {
 		return new ResponseEntity<>("Request Successfull", HttpStatus.ACCEPTED);
 	}
 
+//	@DeleteMapping("/deleteUser/{rollNumber}")
+//	public ResponseEntity<String> deleteUser(@PathVariable String rollNumber) {
+//		if (idNotFound.checkIDFound(rollNumber) == false) {
+//			throw new IdNotFoundException("601", "Id not Found");
+//		}
+//		try {
+//			logger.info("Deleting User");
+//			userService.deleteUser(rollNumber);
+//			return new ResponseEntity<>("Request Successfull", HttpStatus.ACCEPTED);
+//		} catch (Exception e) {
+//			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+//	}
+
 	@DeleteMapping("/deleteUser/{rollNumber}")
 	public ResponseEntity<String> deleteUser(@PathVariable String rollNumber) {
 		if (idNotFound.checkIDFound(rollNumber) == false) {
 			throw new IdNotFoundException("601", "Id not Found");
 		}
 		try {
+			InputFormat inputFormat = new InputFormat();
+			UserDTO userDTO = new UserDTO();
+			userDTO.setRollNumber(rollNumber);
+			inputFormat.userDTO = userDTO;
+			inputFormat.setMethod("Delete");
+			kafkaTemplate.send(TOPIC, inputFormat);
 			logger.info("Deleting User");
-			userService.deleteUser(rollNumber);
 			return new ResponseEntity<>("Request Successfull", HttpStatus.ACCEPTED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
-//	@DeleteMapping("/deleteUser/{rollNumber}")
-//	public ResponseEntity<String> deleteUser(@PathVariable String rollNumber) {
-//		try {
-//			InputFormat inputFormat = new InputFormat();
-//			inputFormat.userModel.setRollNumber(rollNumber);
-//			inputFormat.setMethod("Delete");
-//			kafkaTemplate.send(TOPIC, inputFormat);
-//			logger.info("Deleting User");
-//			return new ResponseEntity<>("User Deleted Successfully", HttpStatus.ACCEPTED);
-//		} catch (Exception e) {
-//			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
-//	}
-
-//	@GetMapping("/getUser/{lowerRange}/{upperRange}")
-//	public Optional<UserModel> getUser(@PathVariable String lowerRange, @PathVariable String upperRange) {
-//		logger.info("Getting users in between given Range");
-//		return userService.getUsersInRange(lowerRange,upperRange);
-//	}
 
 }

@@ -40,8 +40,13 @@ public class UserService {
 		System.out.println("CONSUMED MESSAGE : " + "updated " + userModel);
 	}
 
-	public void deleteUser(String rollNumber) {
-		daoUser.deleteById(rollNumber);
+//	public void deleteUser(String rollNumber) {
+//		daoUser.deleteById(rollNumber);
+//		System.out.println("CONSUMED MESSAGE : " + "deleted user");
+//	}
+	public void deleteUser(InputFormat inputFormat) {
+		UserModel userModel=userConverter.dtoToUserModel(inputFormat.userDTO);
+		daoUser.deleteById(userModel.getRollNumber());
 		System.out.println("CONSUMED MESSAGE : " + "deleted user");
 	}
 	
@@ -53,8 +58,4 @@ public class UserService {
 			return false;
 		}
 	}
-//	public List<UserModel> getUsersInRange(String lowerRange,String upperRange){
-//	return daoUser.
-//}
-
 }
