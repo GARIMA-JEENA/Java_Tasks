@@ -1,4 +1,6 @@
 package com.kafka.document;
+import com.kafka.config.dto.UserDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,5 +15,5 @@ import lombok.ToString;
 public class InputFormat {
 
 	public String method;
-	public UserModel userModel;
+	public UserDTO userDTO;
 }
