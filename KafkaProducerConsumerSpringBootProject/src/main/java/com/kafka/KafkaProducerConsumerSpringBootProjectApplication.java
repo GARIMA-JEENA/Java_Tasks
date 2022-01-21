@@ -16,17 +16,17 @@ public class KafkaProducerConsumerSpringBootProjectApplication {
 
 //bin/kafka-server-start.sh config/server.properties
 
-//bin/kafka-topics.sh --create --topic UserTask3 --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1
+//bin/kafka-topics.sh --create --topic SpringTask --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1
 
-//bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic UserTask3 --from-beginning
+//bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic SpringTask --from-beginning
 
-//bin/kafka-console-producer.sh --broker-list localhost:9092  --topic UserTask3
+//bin/kafka-console-producer.sh --broker-list localhost:9092  --topic SpringTask
 
 //history | grep create
 
 //./bin/kafka-topics.sh --bootstrap-server=localhost:9092 --list
 
-//./bin/kafka-topics.sh --bootstrap-server=localhost:9092 --describe --topic UserTask3
+//./bin/kafka-topics.sh --bootstrap-server=localhost:9092 --describe --topic SpringTask
 
 //db name: Task3
 

@@ -19,7 +19,7 @@ public class UserService {
 	UserConverter userConverter;
 
 	public void createUser(InputFormat inputFormat) {
-		UserModel userModel=userConverter.dtoToUserModel(inputFormat.userDTO);
+		UserModel userModel = userConverter.dtoToUserModel(inputFormat.userDTO);
 		daoUser.save(userModel);
 		System.out.println("CONSUMED MESSAGE : " + "created " + userModel);
 	}
@@ -35,7 +35,7 @@ public class UserService {
 	}
 
 	public void updateUser(InputFormat inputFormat) {
-		UserModel userModel=userConverter.dtoToUserModel(inputFormat.userDTO);
+		UserModel userModel = userConverter.dtoToUserModel(inputFormat.userDTO);
 		daoUser.save(userModel);
 		System.out.println("CONSUMED MESSAGE : " + "updated " + userModel);
 	}
@@ -45,16 +45,15 @@ public class UserService {
 //		System.out.println("CONSUMED MESSAGE : " + "deleted user");
 //	}
 	public void deleteUser(InputFormat inputFormat) {
-		UserModel userModel=userConverter.dtoToUserModel(inputFormat.userDTO);
+		UserModel userModel = userConverter.dtoToUserModel(inputFormat.userDTO);
 		daoUser.deleteById(userModel.getRollNumber());
 		System.out.println("CONSUMED MESSAGE : " + "deleted user");
 	}
-	
+
 	public boolean checkId(String rollNumber) {
-		if(daoUser.existsById(rollNumber)==true) {
+		if (daoUser.existsById(rollNumber) == true) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
