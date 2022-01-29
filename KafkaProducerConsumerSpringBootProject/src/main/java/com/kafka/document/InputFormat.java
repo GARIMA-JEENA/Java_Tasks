@@ -1,5 +1,6 @@
 package com.kafka.document;
-import com.kafka.config.dto.UserDTO;
+
+import com.kafka.dto.UserDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

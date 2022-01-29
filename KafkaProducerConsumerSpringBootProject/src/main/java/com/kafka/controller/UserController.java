@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.kafka.config.dto.UserDTO;
+import com.kafka.dto.UserDTO;
 import com.kafka.document.InputFormat;
 import com.kafka.service.UserService;
 import com.kafka.validation.IdNotFound;
@@ -67,9 +67,9 @@ public class UserController {
 			return new ResponseEntity<>("ID Not Found Please Check", HttpStatus.BAD_REQUEST);
 		}
 		logger.info("Getting user Details ");
-		UserDTO userDTO=new UserDTO();
-		 userDTO=userService.getUser(rollNumber);
-		 return new ResponseEntity<>(userDTO, HttpStatus.ACCEPTED);
+		UserDTO userDTO = new UserDTO();
+		userDTO = userService.getUser(rollNumber);
+		return new ResponseEntity<>(userDTO, HttpStatus.ACCEPTED);
 	}
 
 	@PutMapping("/updateUser/{rollNumber}")

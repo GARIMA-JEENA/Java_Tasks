@@ -3,7 +3,7 @@ package com.kafka.service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.kafka.config.dto.UserDTO;
+import com.kafka.dto.UserDTO;
 import com.kafka.converter.UserConverter;
 import com.kafka.dao.DaoUser;
 import com.kafka.document.InputFormat;

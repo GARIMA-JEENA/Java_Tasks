@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-import com.kafka.config.dto.UserDTO;
+import com.kafka.dto.UserDTO;
 import com.kafka.document.UserModel;
 
 @Component
@@ -26,14 +26,12 @@ public class UserConverter {
 	public List<UserDTO> userModelToDTO(List<UserModel> userModel) {
 		return userModel.stream().map(x -> userModelToDTO(x)).collect(Collectors.toList());
 	}
-	
-	public UserModel dtoToUserModel(UserDTO userDTO)
-	{
+
+	public UserModel dtoToUserModel(UserDTO userDTO) {
 
 		ModelMapper mapper = new ModelMapper();
 		UserModel map = mapper.map(userDTO, UserModel.class);
 		return map;
 	}
-
 
 }

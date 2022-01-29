@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
+
 @Document
 @Data
 public class UserModel {
@@ -14,5 +15,5 @@ public class UserModel {
 	private String lastName;
 	private String stream;
 	private String location;
-	
+
 }
