@@ -13,7 +13,7 @@ public class KafkaConsumer {
 	@Autowired
 	protected UserService userService;
 
-	@KafkaListener(topics = "SpringTask", groupId = "SpringGroup", containerFactory = "userKafkaListenerFactory")
+	@KafkaListener(topics = "SpringTask", groupId = "SpringGroup1", containerFactory = "userKafkaListenerFactory")
 	public void consume(InputFormat inputFormat) {
 		if (inputFormat.getMethod().equals("Create")) {
 			userService.createUser(inputFormat);
