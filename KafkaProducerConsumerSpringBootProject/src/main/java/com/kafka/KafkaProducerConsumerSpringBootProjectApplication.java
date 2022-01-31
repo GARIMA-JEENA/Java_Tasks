@@ -32,7 +32,7 @@ public class KafkaProducerConsumerSpringBootProjectApplication {
 
 //{
 //    "method":"Create",
-//    "userModel":
+//    "userDTO":
 //    {
 //    "rollNumber":"200",
 //    "firstName":"Sneha",
