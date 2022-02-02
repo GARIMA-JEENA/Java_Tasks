@@ -21,7 +21,7 @@ public class UserService {
 	public void createUser(InputFormat inputFormat) {
 		UserModel userModel = userConverter.dtoToUserModel(inputFormat.userDTO);
 		daoUser.save(userModel);
-		System.out.println("CONSUMED MESSAGE : " + "created " + userModel);
+		System.out.println("User created " + userModel);
 	}
 
 	public List<UserDTO> getAllUsers() {
@@ -37,7 +37,7 @@ public class UserService {
 	public void updateUser(InputFormat inputFormat) {
 		UserModel userModel = userConverter.dtoToUserModel(inputFormat.userDTO);
 		daoUser.save(userModel);
-		System.out.println("CONSUMED MESSAGE : " + "updated " + userModel);
+		System.out.println("User Details updated " + userModel);
 	}
 
 //	public void deleteUser(String rollNumber) {
@@ -47,7 +47,7 @@ public class UserService {
 	public void deleteUser(InputFormat inputFormat) {
 		UserModel userModel = userConverter.dtoToUserModel(inputFormat.userDTO);
 		daoUser.deleteById(userModel.getRollNumber());
-		System.out.println("CONSUMED MESSAGE : " + "deleted user");
+		System.out.println(" User Deleted");
 	}
 
 	public boolean checkId(String rollNumber) {
