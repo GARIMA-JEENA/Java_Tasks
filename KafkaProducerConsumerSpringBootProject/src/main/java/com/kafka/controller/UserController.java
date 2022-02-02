@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kafka.dto.UserDTO;
 import com.kafka.document.InputFormat;
 import com.kafka.service.UserService;
+//import com.kafka.validation.EmptyInputException;
 import com.kafka.validation.IdNotFound;
 import com.kafka.validation.InputValidation;
 
@@ -41,8 +42,7 @@ public class UserController {
 
 	@PostMapping("/createUser")
 	public ResponseEntity<String> createUser(@RequestBody InputFormat inputFormat) {
-		if (inputValidation.validationFunc(inputFormat) == false) {
-//			throw new EmptyInputException();
+		if (inputValidation.ifEmptyInputFunc(inputFormat) == false) {
 			return new ResponseEntity<>("Empty Input Fields Please check", HttpStatus.BAD_REQUEST);
 		}
 		try {
@@ -78,7 +78,7 @@ public class UserController {
 //			throw new IdNotFoundException();
 			return new ResponseEntity<>("ID Not Found Please Check", HttpStatus.BAD_REQUEST);
 		}
-		if (inputValidation.validationFunc(inputFormat) == false) {
+		if (inputValidation.ifEmptyInputFunc(inputFormat) == false) {
 //			throw new EmptyInputException();
 			return new ResponseEntity<>("Input Fields are Empty", HttpStatus.BAD_REQUEST);
 		}

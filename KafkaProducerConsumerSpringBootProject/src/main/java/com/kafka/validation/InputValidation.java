@@ -7,7 +7,7 @@ import com.kafka.document.InputFormat;
 @Component
 public class InputValidation {
 
-	public boolean validationFunc(InputFormat inputFormat) {
+	public boolean ifEmptyInputFunc(InputFormat inputFormat) {
 
 		if (inputFormat.userDTO.getRollNumber().isEmpty() || inputFormat.userDTO.getFirstName().isEmpty()
 				|| inputFormat.userDTO.getLastName().isEmpty() || inputFormat.userDTO.getStream().isEmpty()
