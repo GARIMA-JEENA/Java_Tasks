@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.kafka.document.InputFormat;
 import com.kafka.service.UserService;
+import com.kafka.validation.EmptyInputException;
 
 @Component
 public class KafkaConsumer {
@@ -24,11 +25,11 @@ public class KafkaConsumer {
 			userService.createUser(inputFormat);
 		}
 		if (inputFormat.getMethod().equals("Update")) {
-			logger.info("Creating User");
+			logger.info("Updating User Details");
 			userService.updateUser(inputFormat);
 		}
 		if (inputFormat.getMethod().equals("Delete")) {
-			logger.info("Creating User");
+			logger.info("Deleting User");
 //			userService.deleteUser(inputFormat.userDTO.getRollNumber());
 			userService.deleteUser(inputFormat);
 		}

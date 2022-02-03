@@ -40,7 +40,7 @@ public class UserController {
 	@PostMapping("/createUser")
 	public ResponseEntity<String> createUser(@RequestBody InputFormat inputFormat) {
 		if (inputValidation.ifEmptyInputFunc(inputFormat) == false) {
-			throw new EmptyInputException();
+			throw new EmptyInputException("Input Fields are Empty.Please Check");
 		}
 		kafkaTemplate.send(TOPIC, inputFormat);
 		return new ResponseEntity<>("Request Successfull", HttpStatus.ACCEPTED);
@@ -54,7 +54,7 @@ public class UserController {
 	@GetMapping("/getUser/{rollNumber}")
 	public ResponseEntity<?> getUser(@PathVariable String rollNumber) {
 		if (idNotFound.checkIDFound(rollNumber) == false) {
-			throw new IdNotFoundException();
+			throw new IdNotFoundException("User with given Roll Number does not Exists .Please Check");
 		}
 		UserDTO userDTO = new UserDTO();
 		userDTO = userService.getUser(rollNumber);
@@ -64,10 +64,10 @@ public class UserController {
 	@PutMapping("/updateUser/{rollNumber}")
 	public ResponseEntity<String> udpateUser(@PathVariable String rollNumber, @RequestBody InputFormat inputFormat) {
 		if (idNotFound.checkIDFound(rollNumber) == false) {
-			throw new IdNotFoundException();
+			throw new IdNotFoundException("User with given Roll Number does not Exists .Please Check");
 		}
 		if (inputValidation.ifEmptyInputFunc(inputFormat) == false) {
-			throw new EmptyInputException();
+			throw new EmptyInputException("Input Fields are Empty.Please Check");
 		}
 		kafkaTemplate.send(TOPIC, inputFormat);
 		return new ResponseEntity<>("Request Successfull", HttpStatus.ACCEPTED);
@@ -89,7 +89,7 @@ public class UserController {
 	@DeleteMapping("/deleteUser/{rollNumber}")
 	public ResponseEntity<String> deleteUser(@PathVariable String rollNumber) {
 		if (idNotFound.checkIDFound(rollNumber) == false) {
-			throw new IdNotFoundException();
+			throw new IdNotFoundException("User with given Roll Number does not exists .Please Check");
 		}
 		try {
 			InputFormat inputFormat = new InputFormat();

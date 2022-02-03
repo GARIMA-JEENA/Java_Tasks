@@ -42,7 +42,7 @@ public class UserService {
 
 //	public void deleteUser(String rollNumber) {
 //		daoUser.deleteById(rollNumber);
-//		System.out.println("CONSUMED MESSAGE : " + "deleted user");
+//		System.out.println( "deleted user");
 //	}
 	public void deleteUser(InputFormat inputFormat) {
 		UserModel userModel = userConverter.dtoToUserModel(inputFormat.userDTO);

@@ -14,11 +14,14 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(EmptyInputException.class)
 	public ResponseEntity<String> handleEmptyInputFunc(EmptyInputException emptyInputException) {
-		return new ResponseEntity<String>("Input Fields are Empty Please Check ", HttpStatus.BAD_REQUEST);
+		String errorMessage = emptyInputException.getMessage();
+		return new ResponseEntity<String>(errorMessage, HttpStatus.NOT_ACCEPTABLE);
 	}
+
 	@ExceptionHandler(IdNotFoundException.class)
 	public ResponseEntity<String> handleIdNotFoundFunc(IdNotFoundException idNotFoundException) {
-		return new ResponseEntity<String>("User with Given Id does not exists, Please Check ", HttpStatus.NOT_FOUND);
+		String errorMessage = idNotFoundException.getMessage();
+		return new ResponseEntity<String>(errorMessage, HttpStatus.NOT_FOUND);
 	}
 
 	@Override
@@ -26,6 +29,5 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		return new ResponseEntity<Object>("Please Change Your Method Type ", HttpStatus.METHOD_NOT_ALLOWED);
 	}
-
 
 }
