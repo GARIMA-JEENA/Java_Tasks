@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import com.kafka.document.InputFormat;
 import com.kafka.service.UserService;
-import com.kafka.validation.EmptyInputException;
 
 @Component
 public class KafkaConsumer {
